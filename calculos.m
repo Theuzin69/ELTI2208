@@ -1,11 +1,15 @@
 clc
 
-##Constantes (transitores)
+##Constantes (transitores NPN)
 Beta = 200;
 alpha = Beta / (Beta+1);
 VT = 0.026;
 VA = 100;
 VBE = 0.7;
+
+##Constantes (transitores PNP)
+Betapnp = 200;
+alphapnp = Betapnp / (Betapnp+1);
 
 ##Constantes (circuito)
 VCC = 20;
@@ -14,34 +18,37 @@ RL = 100000;
 Vin = 0.01;
 IEE = 0.002;
 
-##polarização dos transistores npn
+##polarização dos transistores NPN
 IE = IEE / 2
 IC = alpha * IE
 IB = IE / (Beta + 1)
 
-####pnp
-##IEpnp = IC;
-##ICpnp = alpha * IEpnp
-##IBpnp = IEpnp / (Beta + 1)
+##polarização dos transistores PNP
+ICpnp = IC
+IEpnp = ICpnp * (1/alphapnp)
+IBpnp = IEpnp / (Betapnp + 1)
+printf("\n")
 
 ##Pequenos Sinais
 gm = IC / VT
 rpi = VT / IB
 re = VT / IE
+printf("\n")
 
 ##ro
+ro1 = VA / IC
+ro2 = VA / IC
 ro3 = VA / IC
 ro4 = VA / IC
-ro5 = VA / IC
-ro6 = VA / IC
-
-##calculo espelho de corrente
-RI = (VCC - VEE + VBE) / (IEE * (1 + 2/Beta))
+printf("\n")
 
 ##ganho
-ro4ro6 = 1 / (1/ro4 + 1/ro6)
-Rout = 1 / (1/ro4ro6 + 1/RL)
-RE = gm*Rout / (1028*gm) - 1/gm
-AV = gm*Rout / (1 + gm*RE)
+ro = 1 / (1/ro2 + 1/ro4)
+AV = gm*ro
+
+printf("\n")
+
+##capacitor (estágio 1)
+C1 = 1 / (2*pi*100*ro)
 
 
