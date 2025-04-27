@@ -93,8 +93,7 @@ RE = 5e3;   % Resistência de carga (Ohms)
 Vin = 1.028;   % Sinal de entrada (V)
 
 %% Polarização do transistor NPN
-IB = (VCC - 0.7) / (RB + Beta + 1);
-IB = 18.12e-6;
+IB = (VCC - 0.7) / (RB + RE * (Beta + 1));
 IE = IB * (Beta + 1);
 IC = IB * Beta;
 
